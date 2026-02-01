@@ -1,0 +1,117 @@
+---@type LangFile
+return {
+    misc = {
+        text_etc = "etc.",
+        text_main = "Main Target",
+        text_sub = "Sub Target",
+        text_extra = "Extra Target",
+        text_invader = "Invader",
+        text_yes = "Yes",
+        text_no = "No",
+        text_day = "Day",
+        text_night = "Night",
+        text_map = "Map",
+        text_level = "Quest Level",
+        text_target_num = "Target Count",
+        text_time = "Time Limit",
+        text_life = "Life Limit",
+        text_tod = "Time of Day",
+        text_player = "Player Limit",
+        text_lock = "Lock",
+        text_special = "Special",
+        text_memory = "Memory",
+        text_auth = "Auth Status",
+        text_none = "None",
+        text_na = "N/A",
+        text_cant_use = "Mod is only usable in the lobby while the Quest Counter is closed.",
+        text_success = "OK",
+        text_mystery_short = "A",
+        text_star = "★",
+        text_rusure = "Are you sure?",
+        text_random = "Random",
+        text_quests = "Quests",
+        text_filtered = "Filtered",
+        text_string = "text",
+        text_number = "number",
+        text_rank = "Quest Rank",
+        text_quest_id = "Quest ID",
+    },
+    menu = {
+        config = {
+            name = "Mod",
+            quest_name_format = "Quest Name Format",
+            button_reset = "Reset",
+            tooltip_quest_name_format = "Checkout Help > Filter for field names",
+        },
+        language = {
+            name = "Language",
+            fallback = "Fallback",
+            fallback_tooltip = "Display message in english if key is missing",
+        },
+        quest_gen = {
+            name = "Quest Generator",
+        },
+        help = {
+            name = "Help",
+        },
+    },
+    mod = {
+        combo_mode = "Mode",
+        combo_mode_values = {
+            ONE = "One Quest",
+            ALL = "All Quests",
+        },
+        input_filter = "Filter",
+        combo_quest = "Quest",
+        box_allow_invalid = "Allow Invalid Quests",
+        button_apply = "Apply",
+        button_reset = "Reset",
+        button_delete = "Delete",
+        tooltip_delete = "One Quest: Delete selected quest\nAll Quests: Delete all quests in the Quest droplist",
+        box_disable_delete_confirm = "Disable Delete Confirmation",
+        combo_quest_gen_rank = "Quest Rank",
+        slider_quest_gen_count = "Count",
+        button_generate = "Generate",
+        button_rules = "Rules",
+        button_filter = "Filter",
+    },
+    help = {
+        combo_map_rules = "Map",
+        table_monster = {
+            header_name = "Name",
+            header_main = "Main Target",
+            header_sub = "Sub Target",
+            header_extra = "Extra Target/Invader",
+            header_quest_rank = "Quest Rank",
+            header_memory = "Memory",
+            tooltip_header_level = "Minimum Level",
+        },
+        table_cond = {
+            header_min_level = "Minimum Level",
+            header_max_level = "Maximum Level",
+            header_hunt_num = "Target Count",
+            header_time_limit = "Time Limit",
+            header_life_limit = "Life Limit",
+            header_order_num = "Player Limit",
+            tooltip_quest_life = "Game does not check Maximum Level requirements for 5 Quest Life",
+        },
+        table_filter = {
+            header_search_field = "Search Field",
+            header_type = "Type",
+            header_data = "Data",
+        },
+        text_memory = "Memory Limit",
+        text_min_level = "Minimum Level",
+        tooltip_memory_limit = "Maps have a memory limit that cannot be exceeded.\nMonsters currently on the map contribute to the memory usage",
+        text_case = "Filter is case-insensitive",
+        text_example = "Examples",
+        text_queries = "flooded forest\n"
+            .. '"lava caverns" OR "great baggi"\n'
+            .. "monster:rathalos\n"
+            .. 'main_monster:"Risen Teostra" AND level:>=250\n'
+            .. "rank:1-3 AND NOT tod:night\n"
+            .. "map:arena OR map:citadel\n"
+            .. "(time:50 AND life:1) OR (time:25 AND player:4)\n"
+            .. "valid:yes AND special:no AND rank:9",
+    },
+}
