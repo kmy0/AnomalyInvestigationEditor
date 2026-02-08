@@ -585,6 +585,11 @@ function this.init()
         return false
     end
 
+    local quest_dict = s.get("snow.QuestManager")._QuestDataDictionary
+    if not quest_dict or not quest_dict._entries then
+        return false
+    end
+
     e.new("snow.quest.StartTimeType")
     e.new("snow.quest.nRandomMysteryQuest.QuestCheckResult")
     e.new("snow.quest.nRandomMysteryQuest.LotType")
