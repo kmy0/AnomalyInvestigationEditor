@@ -1,12 +1,5 @@
 ---@class (exact) SnowData
----@field enum SnowEnum
 ---@field map SnowMap
-
----@class (exact) SnowEnum
----@field tod table<snow.quest.StartTimeType, string>
----@field quest_check_result table<snow.quest.nRandomMysteryQuest.QuestCheckResult, string>
----@field random_mystery_lot_type table<snow.quest.nRandomMysteryQuest.LotType, string>
----@field random_mystery_lot_em_type table<snow.quest.nRandomMysteryQuest.LotEmType, string>
 
 ---@class (exact) SnowMap
 ---@field em_data table<snow.enemy.EnemyDef.EmTypes, EmData>
@@ -57,12 +50,6 @@
 
 ---@class SnowData
 local this = {
-    enum = {
-        tod = {},
-        quest_check_result = {},
-        random_mystery_lot_type = {},
-        random_mystery_lot_em_type = {},
-    },
     map = {
         em_data = {},
         map_data = {},

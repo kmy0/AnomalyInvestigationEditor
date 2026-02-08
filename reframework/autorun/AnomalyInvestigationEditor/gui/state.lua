@@ -18,13 +18,12 @@ local combo = require("AnomalyInvestigationEditor.gui.combo")
 local config = require("AnomalyInvestigationEditor.config.init")
 local config_set = require("AnomalyInvestigationEditor.util.imgui.config_set")
 local data = require("AnomalyInvestigationEditor.data.init")
-local game_data = require("AnomalyInvestigationEditor.util.game.data")
 local mystery = require("AnomalyInvestigationEditor.mystery")
 local util_table = require("AnomalyInvestigationEditor.util.misc.table")
 
 local snow_map = data.snow.map
 local mod = data.mod
-local rl = game_data.reverse_lookup
+local rl = util_table.reverse_lookup
 
 ---@class GuiState
 local this = {

@@ -23,13 +23,11 @@
 
 local config = require("AnomalyInvestigationEditor.config.init")
 local data = require("AnomalyInvestigationEditor.data.init")
-local game_data = require("AnomalyInvestigationEditor.util.game.data")
+local e = require("AnomalyInvestigationEditor.util.game.enum")
 local search_base = require("AnomalyInvestigationEditor.util.misc.search_base")
 local util_table = require("AnomalyInvestigationEditor.util.misc.table")
 
 local snow_map = data.snow.map
-local snow_enum = data.snow.enum
-local rl = game_data.reverse_lookup
 
 ---@class MysterySearch
 local this = search_base:new({
@@ -135,10 +133,9 @@ function this:add(quest)
         no,
     }, true)
     util_table.set_nested_value(self.data.tod, {
-        (
-            m_data._StartTime == rl(snow_enum.tod, "Day") and config.lang:tr("misc.text_day")
-            or config.lang:tr("misc.text_night")
-        ):lower(),
+        (m_data._StartTime == e.get("snow.quest.StartTimeType").Day and config.lang:tr(
+            "misc.text_day"
+        ) or config.lang:tr("misc.text_night")):lower(),
         no,
     }, true)
     util_table.set_nested_value(self.data.valid, {

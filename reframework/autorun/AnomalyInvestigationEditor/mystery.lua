@@ -19,7 +19,7 @@
 
 local config = require("AnomalyInvestigationEditor.config.init")
 local data = require("AnomalyInvestigationEditor.data.init")
-local game_data = require("AnomalyInvestigationEditor.util.game.data")
+local e = require("AnomalyInvestigationEditor.util.game.enum")
 local m = require("AnomalyInvestigationEditor.util.ref.methods")
 local s = require("AnomalyInvestigationEditor.util.ref.singletons")
 local util_game = require("AnomalyInvestigationEditor.util.game.init")
@@ -27,8 +27,6 @@ local util_ref = require("AnomalyInvestigationEditor.util.ref.init")
 local util_table = require("AnomalyInvestigationEditor.util.misc.table")
 
 local snow_map = data.snow.map
-local snow_enum = data.snow.enum
-local rl = game_data.reverse_lookup
 
 ---@class MysteryEditor
 local this = {
@@ -52,7 +50,7 @@ function this._make_quest(mystery_data)
         name = "",
         quest_no = mystery_data._QuestNo,
         ems = util_game.system_array_to_lua(mystery_seed:getEnemyTypes()),
-        status = snow_enum.quest_check_result[m.checkRandomMysteryQuestOrderBan(
+        status = e.get("snow.quest.nRandomMysteryQuest.QuestCheckResult")[m.checkRandomMysteryQuestOrderBan(
             mystery_data,
             false
         )],
@@ -94,7 +92,7 @@ function this._key_to_quest_name_part(key, mystery_data)
         end
     elseif key == "monster" then
         local names = {}
-        util_game.do_something(mystery_data._BossEmType, function(system_array, index, value)
+        util_game.do_something(mystery_data._BossEmType, function(_, index, value)
             if index > mystery_data._HuntTargetNum then
                 return false
             end
@@ -113,7 +111,7 @@ function this._key_to_quest_name_part(key, mystery_data)
     elseif key == "life" then
         ret = tostring(mystery_data._QuestLife)
     elseif key == "tod" then
-        ret = mystery_data._StartTime == rl(snow_enum.tod, "Day")
+        ret = mystery_data._StartTime == e.get("snow.quest.StartTimeType").Day
                 and config.lang:tr("misc.text_day")
             or config.lang:tr("misc.text_night")
     elseif key == "special" then
@@ -194,7 +192,10 @@ function this.get_seed_flag(quest)
     -- checkRandomMysteryQuestOrderBan calls getRandomQuestSeedFromQuestNo which returns original seed instead of the one we are checking
     this.spoof_seed = quest.mystery_seed
     quest.seed_status =
-        snow_enum.quest_check_result[m.checkRandomMysteryQuestOrderBan(m_data, false)]
+        e.get("snow.quest.nRandomMysteryQuest.QuestCheckResult")[m.checkRandomMysteryQuestOrderBan(
+            m_data,
+            false
+        )]
     if quest.seed_status ~= "OK" then
         quest.seed_flag = data.check_mystery_seed_cond(quest.mystery_seed)
             | data.check_mystery_seed_monster(quest.mystery_seed)
@@ -466,7 +467,7 @@ function this.generate_quest(count, ems)
         this.spoof_em = em
         m.createRandomMysteryQuest(
             m_data,
-            rl(snow_enum.random_mystery_lot_type, "Random"),
+            e.get("snow.quest.nRandomMysteryQuest.LotType").Random,
             idx,
             quest_no,
             true

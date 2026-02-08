@@ -4,7 +4,7 @@ local this = {
 }
 
 local config = require("AnomalyInvestigationEditor.config.init")
-local game_data = require("AnomalyInvestigationEditor.util.game.data")
+local e = require("AnomalyInvestigationEditor.util.game.enum")
 ---@class MethodUtil
 local m = require("AnomalyInvestigationEditor.util.ref.methods")
 local s = require("AnomalyInvestigationEditor.util.ref.singletons")
@@ -13,9 +13,7 @@ local util_misc = require("AnomalyInvestigationEditor.util.misc.init")
 local util_table = require("AnomalyInvestigationEditor.util.misc.table")
 
 local snow_map = this.snow.map
-local snow_enum = this.snow.enum
 local mod_enum = this.mod.enum
-local rl = game_data.reverse_lookup
 
 ---@return table<snow.enemy.EnemyDef.MysteryRank, System.UInt32>
 local function make_extra_release_level_data()
@@ -33,20 +31,17 @@ end
 
 local function make_mystery_rank_data()
     --FIXME: this is the only way I could find to coorelate momsters to A2, A5 etc. rank...
-    ---@type table<snow.quest.QuestCategory, string>
-    local quest_category = {}
     ---@type table<integer, snow.quest.QuestLevel>
     local fixed_mystery = {}
     local max = sdk.find_type_definition("snow.quest.QuestLevel"):get_field("EX_MAX"):get_data() --[[@as snow.quest.QuestLevel]]
     local questman = s.get("snow.QuestManager")
     ---@type table<snow.enemy.EnemyDef.EmTypes, snow.quest.QuestLevel>
     local ret = {}
-
-    game_data.get_enum("snow.quest.QuestCategory", quest_category)
+    local enum = e.new("snow.quest.QuestCategory")
 
     for quest_level = 0, max - 1 do
-        local quest_nos = questman:getQuestNumberArray(rl(quest_category, "Mystery"), quest_level)
-        util_game.do_something(quest_nos, function(system_array, index, quest_no)
+        local quest_nos = questman:getQuestNumberArray(enum.Mystery, quest_level)
+        util_game.do_something(quest_nos, function(_, _, quest_no)
             fixed_mystery[quest_no] = quest_level
         end)
     end
@@ -76,7 +71,7 @@ local function make_em_data()
     ---@type table<snow.QuestMapManager.MapNoType, integer>
     local all_maps = {}
 
-    util_game.do_something(enemy_data._LotEnemyList, function(system_array, index, value)
+    util_game.do_something(enemy_data._LotEnemyList, function(_, _, value)
         if not value:isValid() then
             return
         end
@@ -588,25 +583,14 @@ function this.init()
         return false
     end
 
-    game_data.get_enum("snow.quest.StartTimeType", snow_enum.tod)
-    game_data.get_enum(
-        "snow.quest.nRandomMysteryQuest.QuestCheckResult",
-        snow_enum.quest_check_result
-    )
-    game_data.get_enum("snow.quest.nRandomMysteryQuest.LotType", snow_enum.random_mystery_lot_type)
-    game_data.get_enum(
-        "snow.quest.nRandomMysteryQuest.LotEmType",
-        snow_enum.random_mystery_lot_em_type
-    )
+    e.new("snow.quest.StartTimeType")
+    e.new("snow.quest.nRandomMysteryQuest.QuestCheckResult")
+    e.new("snow.quest.nRandomMysteryQuest.LotType")
+    e.new("snow.quest.nRandomMysteryQuest.LotEmType")
 
-    if
-        util_table.any(
-            this.snow.enum --[[@as table<string, table<integer, string>>]],
-            function(key, value)
-                return util_table.empty(value)
-            end
-        )
-    then
+    if util_table.any(e.enums, function(_, value)
+        return not value.ok
+    end) then
         return false
     end
 

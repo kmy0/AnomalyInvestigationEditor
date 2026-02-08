@@ -1,5 +1,6 @@
 local config = require("AnomalyInvestigationEditor.config.init")
 local data = require("AnomalyInvestigationEditor.data.init")
+local e = require("AnomalyInvestigationEditor.util.game.enum")
 local mystery = require("AnomalyInvestigationEditor.mystery")
 local s = require("AnomalyInvestigationEditor.util.ref.singletons")
 local state = require("AnomalyInvestigationEditor.gui.state")
@@ -337,7 +338,8 @@ local function draw_edit_cond()
             item_config_key,
             1,
             2,
-            snow.enum.tod[config:get(item_config_key)] == "Day" and config.lang:tr("misc.text_day")
+            e.get("snow.quest.StartTimeType")[config:get(item_config_key)] == "Day"
+                    and config.lang:tr("misc.text_day")
                 or config.lang:tr("misc.text_night")
         )
     end, 0, "mod.edit_tod") or changed

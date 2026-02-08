@@ -1,5 +1,5 @@
 local this = require("AnomalyInvestigationEditor.util.game.util")
 
-this.data = require("AnomalyInvestigationEditor.util.game.data")
+this.enum = require("AnomalyInvestigationEditor.util.game.enum")
 
 return this
