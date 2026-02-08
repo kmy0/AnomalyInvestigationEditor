@@ -37,7 +37,9 @@ local function make_mystery_rank_data()
     local questman = s.get("snow.QuestManager")
     ---@type table<snow.enemy.EnemyDef.EmTypes, snow.quest.QuestLevel>
     local ret = {}
-    local enum = e.new("snow.quest.QuestCategory")
+    local enum = e.new("snow.quest.QuestCategory", function(key, _)
+        return key ~= "Min"
+    end)
 
     for quest_level = 0, max - 1 do
         local quest_nos = questman:getQuestNumberArray(enum.Mystery, quest_level)
