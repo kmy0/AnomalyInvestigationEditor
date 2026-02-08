@@ -9,6 +9,7 @@
 ---@field mode ModMode.*
 
 local s = require("AnomalyInvestigationEditor.util.ref.singletons")
+local util_misc = require("AnomalyInvestigationEditor.util.misc.init")
 
 ---@class ModData
 local this = {
@@ -46,9 +47,12 @@ end
 
 ---@return boolean, boolean -- is_ok, changed
 function this.is_ok()
-    local ret = not s.get_no_cache("snow.gui.fsm.questcounter.GuiQuestCounterFsmManager")
-        and not s.get_no_cache("snow.gui.fsm.title.GuiTitleMenuFsmManager")
-        and not s.get("snow.QuestManager"):isActiveQuest()
+    local ret = false
+    util_misc.try(function()
+        ret = not s.get_no_cache("snow.gui.fsm.questcounter.GuiQuestCounterFsmManager")
+            and not s.get_no_cache("snow.gui.fsm.title.GuiTitleMenuFsmManager")
+            and not s.get("snow.QuestManager"):isActiveQuest()
+    end)
     local changed = this.ok ~= ret
 
     if changed then
