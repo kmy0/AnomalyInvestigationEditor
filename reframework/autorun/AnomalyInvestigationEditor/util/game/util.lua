@@ -211,13 +211,17 @@ function this.get_language()
     return s.get_native("via.gui.GUISystem"):get_MessageLanguage()
 end
 
----@param type_def_name string
+---@param type_def string | RETypeDefinition
 ---@param predicate (fun(key: string, value: any): boolean)?
 ---@return table<string, any>
-function this.get_fields(type_def_name, predicate)
+function this.get_fields(type_def, predicate)
     ---@type table<string, any>
     local ret = {}
-    local type_def = util_ref.types.get(type_def_name)
+
+    if type(type_def) == "string" then
+        type_def = util_ref.types.get(type_def)
+    end
+
     if not type_def then
         return ret
     end

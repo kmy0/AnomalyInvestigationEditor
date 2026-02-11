@@ -590,14 +590,14 @@ function this.init()
         return false
     end
 
-    e.new("snow.quest.StartTimeType")
-    e.new("snow.quest.nRandomMysteryQuest.QuestCheckResult")
-    e.new("snow.quest.nRandomMysteryQuest.LotType")
-    e.new("snow.quest.nRandomMysteryQuest.LotEmType")
-
-    if util_table.any(e.enums, function(_, value)
-        return not value.ok
-    end) then
+    if
+        not e.wrap_init(function()
+            e.new("snow.quest.StartTimeType")
+            e.new("snow.quest.nRandomMysteryQuest.QuestCheckResult")
+            e.new("snow.quest.nRandomMysteryQuest.LotType")
+            e.new("snow.quest.nRandomMysteryQuest.LotEmType")
+        end)
+    then
         return false
     end
 
