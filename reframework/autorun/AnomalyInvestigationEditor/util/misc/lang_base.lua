@@ -67,11 +67,13 @@ function this:load()
 end
 
 ---@param lang_file LangFile
-function this:change(lang_file)
+---@param font_size integer?
+function this:change(lang_file, font_size)
     local font = lang_file._font or {}
+    self.font_size = font_size or font.size or self.default_font_size
     self.font = imgui.load_font(
         font.name or self.default_font_file,
-        font.size or self.default_font_size,
+        font_size or font.size or self.default_font_size,
         { 0x1, 0xFFFF, 0 }
     )
     self.current = lang_file

@@ -5,6 +5,7 @@
 ---@class (exact) ModLanguage
 ---@field file string
 ---@field fallback boolean
+---@field font_size integer
 
 ---@class (exact) ModSettings
 ---@field allow_invalid_quests boolean
@@ -53,6 +54,7 @@ return {
         lang = {
             file = "en-us",
             fallback = true,
+            font_size = 16,
         },
         combo = {
             mode = 1,
