@@ -2,11 +2,11 @@ local config = require("AnomalyInvestigationEditor.config.init")
 local config_menu = require("AnomalyInvestigationEditor.gui.init")
 local data = require("AnomalyInvestigationEditor.data.init")
 local hook = require("AnomalyInvestigationEditor.hook")
+local init_chain = require("AnomalyInvestigationEditor.config.init_chain")
 local util = require("AnomalyInvestigationEditor.util.init")
 local logger = util.misc.logger.g
 
-local init =
-    util.misc.init_chain:new("MAIN", config.init, data.init, config_menu.init, data.mod.init)
+local init = init_chain:new("MAIN", config.init, data.init, config_menu.init, data.mod.init)
 init.max_retries = 999
 ---@class MethodUtil
 local m = util.ref.methods
@@ -58,6 +58,10 @@ re.on_draw_ui(function()
     else
         imgui.same_line()
         imgui.text_colored("Init failed!", config_menu.state.colors.bad)
+        local errors = logger:get_last_error()
+        if errors then
+            util.imgui.tooltip_exclamation(errors)
+        end
     end
 end)
 
